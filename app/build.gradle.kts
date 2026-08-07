@@ -191,6 +191,7 @@ dependencies {
     implementation(libs.okhttp.logging)
     implementation(libs.gson)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.nanohttpd)
 
     // Root
     implementation(libs.libsu.core)
