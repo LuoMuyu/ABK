@@ -423,9 +423,10 @@ object RootUtils {
         val asset = listBundledAbkLkmAssets(context).firstOrNull {
             it.variantId == variantId && it.kmi == kmi
         } ?: return null
-        val stageDir = File(context.filesDir, "magica-jailbreak").apply { mkdirs() }
+        val stageContext = context.createDeviceProtectedStorageContext()
+        val stageDir = File(stageContext.filesDir, "magica-jailbreak").apply { mkdirs() }
         val target = File(stageDir, "${asset.variantId}_${asset.kmi}_kernelsu.ko")
-        context.assets.open(asset.assetPath).use { input ->
+        stageContext.assets.open(asset.assetPath).use { input ->
             FileOutputStream(target).use { output -> input.copyTo(output) }
         }
         target.setReadable(true, true)

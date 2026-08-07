@@ -25,24 +25,38 @@ public class AppZygotePreload implements ZygotePreload {
     @Override
     public void doPreload(@NonNull ApplicationInfo appInfo) {
         File ksud = new File(appInfo.nativeLibraryDir, KSUD_LIBRARY_NAME);
-        File request = new File(appInfo.dataDir, REQUEST_RELATIVE_PATH);
         try {
             if (!ksud.isFile()) {
                 throw new IllegalStateException("ksud does not exist: " + ksud);
             }
-            String modulePath = readModulePath(request);
+            Request request = readRequest(appInfo);
             if (!request.delete()) {
-                Log.w(TAG, "failed to delete consumed request: " + request);
+                Log.w(TAG, "failed to delete consumed request: " + request.file);
             }
             System.loadLibrary("abkksu");
-            Log.d(TAG, "executing magica with external module: " + modulePath);
-            forkDontCareAndExecKsud(ksud.getAbsolutePath(), appInfo.packageName, modulePath);
+            Log.d(TAG, "executing magica with external module: " + request.modulePath);
+            forkDontCareAndExecKsud(ksud.getAbsolutePath(), appInfo.packageName, request.modulePath);
         } catch (Throwable error) {
             Log.e(TAG, "failed to start magica late-load", error);
         }
     }
 
-    private static String readModulePath(File request) throws Exception {
+    private static Request readRequest(ApplicationInfo appInfo) throws Exception {
+        File deviceProtectedRequest = appInfo.deviceProtectedDataDir == null
+                ? null
+                : new File(appInfo.deviceProtectedDataDir, REQUEST_RELATIVE_PATH);
+        File credentialProtectedRequest = new File(appInfo.dataDir, REQUEST_RELATIVE_PATH);
+        Log.d(TAG, "probing jailbreak request: device=" + deviceProtectedRequest
+                + ", credential=" + credentialProtectedRequest);
+        if (deviceProtectedRequest != null && deviceProtectedRequest.isFile()) {
+            Log.d(TAG, "using device-protected jailbreak request: " + deviceProtectedRequest);
+            return readRequestFile(deviceProtectedRequest);
+        }
+        Log.d(TAG, "using credential-protected jailbreak request: " + credentialProtectedRequest);
+        return readRequestFile(credentialProtectedRequest);
+    }
+
+    private static Request readRequestFile(File request) throws Exception {
         Properties properties = new Properties();
         try (FileInputStream input = new FileInputStream(request)) {
             properties.load(input);
@@ -54,6 +68,20 @@ public class AppZygotePreload implements ZygotePreload {
         if (!new File(modulePath).isFile()) {
             throw new IllegalStateException("module does not exist: " + modulePath);
         }
-        return modulePath;
+        return new Request(request, modulePath);
+    }
+
+    private static final class Request {
+        final File file;
+        final String modulePath;
+
+        Request(File file, String modulePath) {
+            this.file = file;
+            this.modulePath = modulePath;
+        }
+
+        boolean delete() {
+            return file.delete();
+        }
     }
 }

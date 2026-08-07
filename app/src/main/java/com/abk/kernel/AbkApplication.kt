@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.os.Process
 import android.os.SystemClock
+import android.os.UserHandle
 import com.abk.kernel.utils.LocaleHelper
 import com.abk.kernel.utils.NotificationUtils
 import com.abk.kernel.utils.RootUtils
@@ -22,6 +23,9 @@ class AbkApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        if (UserHandle.isIsolated(Process.myUid())) {
+            return
+        }
         LocaleHelper.init(this)
         WorkflowStepI18n.init(this)
         RootUtils.init(this)
