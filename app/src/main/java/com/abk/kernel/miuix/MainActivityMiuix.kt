@@ -577,6 +577,7 @@ private fun AbkMiuixMainScaffold(
                                                         )
                                                         AbkTab.Settings -> com.abk.kernel.miuix.ui.screens.SettingsScreenMiuix(
                                                             vm = vm,
+                                                            miuixVm = miuixVm,
                                                             outerPadding = contentPadding,
                                                             onOpenInstalledModules = {
                                                                 if (!state.runtimeNavigationEnabled) vm.setRuntimeNavigationEnabled(true)
@@ -943,6 +944,7 @@ private fun AbkMiuixMainScaffold(
                                             )
                                             AbkTab.Settings -> com.abk.kernel.miuix.ui.screens.SettingsScreenMiuix(
                                                 vm = vm,
+                                                miuixVm = miuixVm,
                                                 outerPadding = contentPadding,
                                                 onOpenInstalledModules = {
                                                     if (!state.runtimeNavigationEnabled) vm.setRuntimeNavigationEnabled(true)

@@ -80,6 +80,8 @@ import com.abk.kernel.data.model.normalizeAppUpdateStability
 import com.abk.kernel.data.repository.PreferencesRepository
 import com.abk.kernel.miuix.util.BlurredBar
 import com.abk.kernel.miuix.util.rememberBlurBackdrop
+import com.abk.kernel.miuix.viewmodel.MiuixSettingsViewModel
+import com.abk.kernel.ui.screens.launchAppUpdateInstaller
 import com.abk.kernel.utils.DownloadDirectoryUtils
 import com.abk.kernel.utils.DownloadUtils
 import com.abk.kernel.utils.LocaleHelper
@@ -130,11 +132,13 @@ import top.yukonga.miuix.kmp.utils.scrollEndHaptic
 @Composable
 fun SettingsScreenMiuix(
     vm: MainViewModel,
+    miuixVm: MiuixSettingsViewModel,
     outerPadding: PaddingValues = PaddingValues(0.dp),
     onLogout: () -> Unit = {},
     onOpenInstalledModules: () -> Unit = {},
 ) {
     val state by vm.uiState.collectAsState()
+    val miuixState by miuixVm.state.collectAsState()
     val scrollBehavior = MiuixScrollBehavior()
     val iconTint = MiuixTheme.colorScheme.onSurfaceSecondary
     val navigator = LocalNavigator.current
@@ -154,6 +158,7 @@ fun SettingsScreenMiuix(
     // Auto-install pending app update APK (mirrors MD3 LaunchedEffect).
     LaunchedEffect(state.appUpdatePendingInstallPath) {
         val apkPath = state.appUpdatePendingInstallPath ?: return@LaunchedEffect
+        launchAppUpdateInstaller(context, apkPath)
         vm.consumeAppUpdatePendingInstallPath()
     }
 
@@ -743,7 +748,7 @@ fun SettingsScreenMiuix(
                 Card(modifier = Modifier.fillMaxWidth()) {
                     ArrowPreference(
                         title = stringResource(R.string.settings_color_appearance),
-                        summary = "${themeModeLabel(state.themeMode)} · ${dynamicColorLabel(state.dynamicColorEnabled)}",
+                        summary = "${themeModeLabel(state.themeMode)} · ${dynamicColorLabel(miuixState.miuixDynamicColorEnabled)}",
                         startAction = { Icon(Icons.Default.Palette, contentDescription = null, tint = iconTint) },
                         onClick = { navigator.push(Route.ThemeSettings) }
                     )
