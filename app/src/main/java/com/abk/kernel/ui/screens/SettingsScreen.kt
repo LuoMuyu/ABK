@@ -2100,7 +2100,7 @@ private fun ThemeSettingsScreen(
     onBackgroundImageChange: (String?) -> Unit,
     onBackgroundImageEnabledChange: (Boolean) -> Unit,
     onUiSurfaceAlphaChange: (Float) -> Unit,
-uiStyle: String = "material",
+    uiStyle: String = "material",
     onUiStyleChange: (String) -> Unit = {},
     onUiSurfaceAlphaPreviewChange: (Float) -> Unit,
     onBlurEnabledChange: (Boolean) -> Unit,
@@ -2155,7 +2155,7 @@ uiStyle: String = "material",
             }
             val currentUiLabel = uiStyleLabels[uiStyle] ?: uiStyle
             ExpressiveListItem(
-                title = "MIUIX",
+                title = currentUiLabel,
                 subtitle = stringResource(R.string.settings_ui_style_miuix_subtitle),
                 leadingIcon = Icons.Default.Style,
                 trailingContent = {
