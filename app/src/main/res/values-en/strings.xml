@@ -139,7 +139,7 @@
     <string name="build_source_move_down">Move down</string>
     <string name="build_source_secret_exists">A private-source credential already exists in the fork; it is reused by default, or replaced at submit confirmation.</string>
     <string name="build_source_secret_missing">No private-source credential is configured in the fork yet; provide a fine-grained read-only PAT before submitting.</string>
-    <string name="build_source_manifest_notice">This build's signed ABK manifest will publicly record the full source repository, ref, commit, defconfig, and feature-downgrade status.</string>
+    <string name="build_source_manifest_notice">This build\'s signed ABK manifest will publicly record the full source repository, ref, commit, defconfig, and feature-downgrade status.</string>
     <string name="build_source_repo_line">Source: %1$s</string>
     <string name="build_source_ref_line">Ref: %1$s</string>
     <string name="build_source_patch_line">Toolchain month: %1$s</string>
@@ -151,9 +151,9 @@
     <string name="build_source_pat">Fine-grained read-only PAT (never stored locally)</string>
     <string name="build_source_credential_advanced">Advanced credential options</string>
     <string name="build_source_use_device_token">Use current GitHub sign-in token</string>
-    <string name="build_source_device_token_risk">This token usually carries repo scope and may access multiple private repos under the account. It will be written into the fork's Actions Secret until you delete it manually.</string>
+    <string name="build_source_device_token_risk">This token usually carries repo scope and may access multiple private repos under the account. It will be written into the fork\'s Actions Secret until you delete it manually.</string>
     <string name="build_source_device_token_confirm_title">Confirm uploading high-privilege sign-in token</string>
-    <string name="build_source_device_token_confirm_desc">Continuing encrypts the current Device Flow token into the fork's ABK_CUSTOM_SOURCE_GITHUB_TOKEN. This Secret is not deleted automatically on sign-out.</string>
+    <string name="build_source_device_token_confirm_desc">Continuing encrypts the current Device Flow token into the fork\'s ABK_CUSTOM_SOURCE_GITHUB_TOKEN. This Secret is not deleted automatically on sign-out.</string>
     <string name="build_source_private_credential_required">ABK_CUSTOM_SOURCE_GITHUB_TOKEN is not configured. Provide a fine-grained read-only PAT, or confirm using the current sign-in token in advanced options.</string>
     <string name="build_source_private_plan_share_title">Confirm exporting private-source build plan</string>
     <string name="build_source_private_plan_share_desc">A full plan keeps the source URL %1$s, which exposes the private repo identity; credentials are not included in the plan. Continue exporting?</string>
@@ -831,12 +831,12 @@
     <string name="settings_waiting_fork">Waiting for fork</string>
     <string name="settings_group_account_desc">GitHub account, fork repository, and sign out.</string>
     <string name="settings_group_build_desc">Control automation after builds succeed.</string>
-    <string name="settings_group_security_desc">Manage flash bundle signature verification and the current fork's signing key pair.</string>
+    <string name="settings_group_security_desc">Manage flash bundle signature verification and the current fork\'s signing key pair.</string>
     <string name="settings_custom_source_secret_configured">ABK_CUSTOM_SOURCE_GITHUB_TOKEN already exists. The Secret is a write-only interface and cannot identify which repo the original credential authorized.</string>
     <string name="settings_custom_source_secret_delete">Delete private-source credential</string>
     <string name="settings_custom_source_secret_delete_confirm">After deletion, builds using GitHub private source will fail authentication at the preflight stage until credentials are reconfigured.</string>
-    <string name="settings_custom_source_secret_delete_desc">Delete the fork's ABK_CUSTOM_SOURCE_GITHUB_TOKEN; leaving the app will not do this automatically.</string>
-    <string name="settings_custom_source_secret_dialog_desc">The value is uploaded encrypted to the fork's Actions Secret; it is not stored locally, in build plans, or in the manifest.</string>
+    <string name="settings_custom_source_secret_delete_desc">Delete the fork\'s ABK_CUSTOM_SOURCE_GITHUB_TOKEN; leaving the app will not do this automatically.</string>
+    <string name="settings_custom_source_secret_dialog_desc">The value is uploaded encrypted to the fork\'s Actions Secret; it is not stored locally, in build plans, or in the manifest.</string>
     <string name="settings_custom_source_secret_dialog_title">Update private-source PAT</string>
     <string name="settings_custom_source_secret_missing">Not configured yet. A fine-grained PAT authorized only for the target repo with Contents read-only is recommended.</string>
     <string name="settings_custom_source_secret_operation">Updating GitHub Actions Secret…</string>
@@ -851,7 +851,7 @@
     <string name="settings_security_import_invalid_public_key">Public key PEM could not be parsed.</string>
     <string name="settings_security_import_key_pair_mismatch">Public and private keys do not match.</string>
     <string name="settings_security_import_keys">Import custom public/private key</string>
-    <string name="settings_security_import_keys_desc">Import a custom PEM public and private key, overriding the current fork's signing material.</string>
+    <string name="settings_security_import_keys_desc">Import a custom PEM public and private key, overriding the current fork\'s signing material.</string>
     <string name="settings_security_import_pick_private_key">Pick private key file</string>
     <string name="settings_security_import_pick_public_key">Pick public key file</string>
     <string name="settings_security_import_private_key">Private key PEM</string>
@@ -931,7 +931,7 @@
     <string name="flash_bundle_unverified_requires_confirmation">This flash bundle has not passed signature verification. Continuing enters the high-risk flow.</string>
     <string name="flash_bundle_verification_disabled">Signature verification is disabled in security settings.</string>
     <string name="flash_bundle_missing_signature_message">This flash bundle is missing its signature file. Continuing enters the high-risk flow.</string>
-    <string name="flash_bundle_signature_mismatch_message">This flash bundle's signature does not match the current public key. Continuing enters the high-risk flow.</string>
+    <string name="flash_bundle_signature_mismatch_message">This flash bundle\'s signature does not match the current public key. Continuing enters the high-risk flow.</string>
     <string name="flash_bundle_missing_public_key_message">No public key is available to verify this flash bundle. Continuing enters the high-risk flow.</string>
     <string name="flash_custom_source_notice_title">Lineage-like source artifact info</string>
     <string name="flash_custom_source_url">Source: %1$s</string>

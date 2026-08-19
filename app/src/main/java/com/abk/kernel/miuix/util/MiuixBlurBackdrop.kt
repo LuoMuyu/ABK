@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import top.yukonga.miuix.kmp.blur.LayerBackdrop
 import com.abk.kernel.ui.blur.LocalBlurState
-import com.abk.kernel.ui.blur.rememberBlurBackdrop
 import com.abk.kernel.ui.blur.blurEffect
 
 /**
@@ -21,7 +20,7 @@ import com.abk.kernel.ui.blur.blurEffect
  */
 @Composable
 fun rememberBlurBackdrop(enableBlur: Boolean, surfaceColor: Color) =
-    rememberBlurBackdrop(
+    com.abk.kernel.ui.blur.rememberBlurBackdrop(
         enableBlur = enableBlur,
         surfaceColor = surfaceColor,
     )
@@ -45,16 +44,16 @@ fun BlurredBar(
     blurActive: Boolean = true,
     content: @Composable () -> Unit,
 ) {
-    Box(
-        modifier = if (blurActive) {
-            CompositionLocalProvider(LocalBlurState provides backdrop) {
-                Modifier.blurEffect(blendColor = surfaceColor.copy(alpha = AbkMiuixBlurTintAlpha))
+    if (blurActive) {
+        CompositionLocalProvider(LocalBlurState provides backdrop) {
+            Box(modifier = Modifier.blurEffect(blendColor = surfaceColor.copy(alpha = AbkMiuixBlurTintAlpha))) {
+                content()
             }
-        } else {
-            Modifier
-        },
-    ) {
-        content()
+        }
+    } else {
+        Box {
+            content()
+        }
     }
 }
 
