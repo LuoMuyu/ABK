@@ -426,7 +426,7 @@ fun SettingsScreen(
                         onBackgroundImageChange = { uri -> vm.setBackgroundImageUri(uri) },
                         onBackgroundImageEnabledChange = { enabled -> vm.setBackgroundImageEnabled(enabled) },
                         onUiSurfaceAlphaChange = { alpha -> vm.setUiSurfaceAlpha(alpha) },
-uiStyle = state.uiStyle,
+                        uiStyle = state.uiStyle,
                         onUiStyleChange = { style -> vm.setUiStyle(style) },
                         onUiSurfaceAlphaPreviewChange = { alpha -> vm.setUiSurfaceAlphaPreview(alpha) },
                         onBlurEnabledChange = vm::setBlurEnabled,
@@ -2146,7 +2146,7 @@ uiStyle: String = "material",
             .padding(horizontal = AbkScreenHorizontalPadding),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-Spacer(Modifier.height(topBarHeight + 16.dp))
+        Spacer(Modifier.height(topBarHeight + 16.dp))
         SettingsGroup(title = stringResource(R.string.settings_ui_style)) {
             var uiStyleExpanded by remember { mutableStateOf(false) }
             val uiStyleOptions = remember { listOf("material", "miuix") }

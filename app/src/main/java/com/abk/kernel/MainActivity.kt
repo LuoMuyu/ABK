@@ -145,7 +145,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val vm: MainViewModel = viewModel()
             val state by vm.uiState.collectAsState()
-val miuixVm: MiuixSettingsViewModel = viewModel()
+            val miuixVm: MiuixSettingsViewModel = viewModel()
             val miuixState by miuixVm.state.collectAsState()
             val uiSurfaceAlphaPreview by vm.uiSurfaceAlphaPreview.collectAsState(initial = state.uiSurfaceAlpha)
             var extensionBootstrapIssued by rememberSaveable { mutableStateOf(false) }
