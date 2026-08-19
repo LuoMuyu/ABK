@@ -78,7 +78,6 @@ import com.abk.kernel.ui.components.rememberChildPageOverlayTransition
 import com.abk.kernel.ui.components.ExpressiveHeroCard
 import com.abk.kernel.ui.components.ExpressiveListItem
 import com.abk.kernel.ui.components.ExpressiveSectionCard
-import com.abk.kernel.ui.components.ExpressiveStatusChip
 import com.abk.kernel.ui.components.ExpressiveSwitchItem
 import com.abk.kernel.ui.components.ExpressiveTopBar
 import com.abk.kernel.ui.components.rememberAbkInteractiveRefreshPresentation
@@ -2949,42 +2948,6 @@ private fun shareDiagnosticBundle(context: Context, zipFile: File) {
     context.startActivity(
         Intent.createChooser(intent, context.getString(R.string.settings_export_diagnostics_share))
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    )
-}
-
-@Composable
-private fun SettingsHero(
-    login: String?,
-    forkName: String?,
-    themeMode: String
-) {
-    ExpressiveHeroCard(
-        title = login?.let { stringResource(R.string.settings_connected_github, it) }
-            ?: stringResource(R.string.settings_center_title),
-        subtitle = forkName ?: stringResource(R.string.settings_center_subtitle),
-        icon = Icons.Default.Tune,
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
-        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        badge = {
-            ExpressiveStatusChip(
-                label = when (themeMode) {
-                    "dark" -> stringResource(R.string.settings_dark_theme)
-                    "light" -> stringResource(R.string.settings_light_theme)
-                    else -> stringResource(R.string.settings_theme_system)
-                },
-                icon = Icons.Default.Palette,
-                color = MaterialTheme.colorScheme.primary
-            )
-            ExpressiveStatusChip(
-                label = if (forkName != null) {
-                    stringResource(R.string.settings_fork_connected)
-                } else {
-                    stringResource(R.string.settings_waiting_fork)
-                },
-                icon = Icons.Default.ForkRight,
-                color = if (forkName != null) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.error
-            )
-        }
     )
 }
 

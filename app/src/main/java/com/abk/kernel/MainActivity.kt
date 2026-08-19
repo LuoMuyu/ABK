@@ -969,7 +969,6 @@ private fun AbkMainScaffold(
         )
     }
 }
-}
 
 @Composable
 internal fun AbkTab.displayLabel(rootGranted: Boolean): String = when (this) {
