@@ -698,9 +698,12 @@
     <string name="settings_remove_background_desc">Restore the solid Material theme background</string>
     <string name="settings_ui_opacity">UI opacity</string>
     <string name="settings_ui_opacity_desc">Lower values let cards, top bars, and bottom bars reveal the background.</string>
-    <string name="settings_ui_style">UI style</string>
+<string name="settings_ui_style">UI style</string>
     <string name="settings_ui_style_miuix_subtitle">Use Xiaomi HyperOS design language</string>
     <string name="settings_blur">Blur</string>
+    <string name="settings_blur_desc">Enable frosted-glass blur effects</string>
+    <string name="settings_blur_background">Render custom background into blur</string>
+    <string name="settings_blur_background_desc">When enabled, top bars, bottom bars, cards, and tiles blur the custom background image</string>
     <string name="settings_floating_bottom_bar">Floating bottom bar</string>
     <string name="settings_visual_effects">Visual effects</string>
     <string name="settings_blur_summary">Enable blur effect on top bar and bottom bar</string>
@@ -1270,6 +1273,7 @@
     <string name="ru_lkm_module_not_bundled">No bundled LKM module for %1$s / %2$s</string>
     <string name="ru_log_using_bundled_lkm">[ABK] Using APK-bundled LKM: %1$s · %2$s</string>
     <string name="ru_log_using_local_lkm">[ABK] Using local LKM: %1$s</string>
+    <string name="ru_log_output_dir">[ABK] Output directory: %1$s</string>
     <string name="ru_log_no_root_shell_local_patch">[ABK] Root shell unavailable; falling back to APK-bundled SukiSU-Ultra ksud to patch the local boot image only</string>
     <string name="ru_no_embedded_ksud">No runnable APK-bundled SukiSU-Ultra ksud found; without root you can only generate a patched image after selecting boot.img.</string>
     <string name="ru_install_requires_root">This installation method requires root permission.</string>

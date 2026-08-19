@@ -698,9 +698,12 @@
     <string name="settings_remove_background_desc">Вернуться к сплошному фону темы Material</string>
     <string name="settings_ui_opacity">Непрозрачность интерфейса</string>
     <string name="settings_ui_opacity_desc">При уменьшении карточки, верхняя и нижняя панели начинают пропускать фон.</string>
-    <string name="settings_ui_style">Стиль интерфейса</string>
+<string name="settings_ui_style">Стиль интерфейса</string>
     <string name="settings_ui_style_miuix_subtitle">Использовать язык дизайна Xiaomi HyperOS</string>
     <string name="settings_blur">Размытие</string>
+    <string name="settings_blur_desc">Включить эффекты матового стекла</string>
+    <string name="settings_blur_background">Рендерить пользовательский фон в размытие</string>
+    <string name="settings_blur_background_desc">При включении верхняя и нижняя панели, карточки и плитки размывают изображение пользовательского фона</string>
     <string name="settings_floating_bottom_bar">Плавающая нижняя панель</string>
     <string name="settings_visual_effects">Визуальные эффекты</string>
     <string name="settings_blur_summary">Включить размытие верхней и нижней панели</string>
@@ -1256,6 +1259,7 @@
     <string name="ru_lkm_module_not_bundled">Нет встроенного LKM-модуля для %1$s / %2$s</string>
     <string name="ru_log_using_bundled_lkm">[ABK] Используется встроенный в APK LKM: %1$s · %2$s</string>
     <string name="ru_log_using_local_lkm">[ABK] Используется локальный LKM: %1$s</string>
+    <string name="ru_log_output_dir">[ABK] Каталог вывода: %1$s</string>
     <string name="ru_log_no_root_shell_local_patch">[ABK] Root shell недоступен — переходим на встроенный в APK SukiSU-Ultra ksud для патча только локального образа boot</string>
     <string name="ru_no_embedded_ksud">Исполняемый встроенный в APK SukiSU-Ultra ksud не найден; без root можно только сгенерировать пропатченный образ после выбора boot.img.</string>
     <string name="ru_install_requires_root">Этот способ установки требует прав root.</string>
