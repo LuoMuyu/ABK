@@ -70,6 +70,8 @@ import com.abk.kernel.data.model.PrebuiltGkiRelease
 import com.abk.kernel.data.model.WorkflowRun
 import com.abk.kernel.data.model.isActive
 import com.abk.kernel.data.model.isFailedFlashRun
+import com.abk.kernel.data.model.isKernelBuild
+import com.abk.kernel.data.model.isManagerBuild
 import com.abk.kernel.ui.navigation3.LocalNavigator
 import com.abk.kernel.ui.navigation3.Route
 import com.abk.kernel.ui.screens.flash.FlashContentTab
@@ -82,6 +84,7 @@ import com.abk.kernel.ui.screens.flash.hasDownloadedFilesForRun
 import com.abk.kernel.ui.screens.flash.hasKernelArtifact
 import com.abk.kernel.ui.screens.flash.hasManagerArtifact
 import com.abk.kernel.ui.screens.flash.isAbkManagerFlashRun
+import com.abk.kernel.ui.screens.flash.isSuccessfulKernelFlashRun
 import com.abk.kernel.ui.screens.flash.labelRes
 import com.abk.kernel.ui.screens.flash.limitWorkflowGroupsForDisplay
 import com.abk.kernel.ui.screens.flash.shouldAppearInWorkflowList
@@ -250,8 +253,14 @@ fun FlashScreenMiuix(
     }
 
     val allWorkflowGroups = remember(workflowGroups, state.sessionGhostFailedRuns, state.dismissedFailedRunIds, recentRunById) {
-        val activeRunIds = state.recentRuns.filter { it.isActive() }.map { it.id }.toSet()
-        val extraGroups = activeRunIds
+        val placeholderRunIds = state.recentRuns
+            .filter {
+                (it.isActive() && (it.isKernelBuild() || it.isManagerBuild())) ||
+                    it.isSuccessfulKernelFlashRun()
+            }
+            .map { it.id }
+            .toSet()
+        val extraGroups = placeholderRunIds
             .filter { id -> workflowGroups.none { it.runId == id } }
             .mapNotNull { id ->
                 val run = recentRunById[id] ?: return@mapNotNull null
@@ -261,7 +270,7 @@ fun FlashScreenMiuix(
             .filter { it !in state.dismissedFailedRunIds }
             .toSet()
         val extraGhostGroups = ghostRunIds
-            .filter { id -> workflowGroups.none { it.runId == id } && id !in activeRunIds }
+            .filter { id -> workflowGroups.none { it.runId == id } && id !in placeholderRunIds }
             .mapNotNull { id ->
                 val run = recentRunById[id] ?: return@mapNotNull null
                 emptyWorkflowGroupFor(run, unlinkedWorkflowTitle)
@@ -276,8 +285,10 @@ fun FlashScreenMiuix(
                     return@filter false
                 }
                 val isActive = run?.isActive() == true
+                val isActiveFlashRun = isActive &&
+                    (run?.isKernelBuild() == true || run?.isManagerBuild() == true)
                 val isSessionGhost = group.runId in state.sessionGhostFailedRuns
-                isActive || isSessionGhost || group.shouldAppearInWorkflowList(run)
+                isActiveFlashRun || isSessionGhost || group.shouldAppearInWorkflowList(run)
             }
             .sortedForWorkflowDisplay(recentRunById)
     }
@@ -384,7 +395,11 @@ fun FlashScreenMiuix(
     // Load recent runs when logged in
     LaunchedEffect(state.isLoggedIn, state.forkRepo?.fullName) {
         if (state.isLoggedIn && state.forkRepo != null) {
-            vm.loadRecentRuns(showRefreshIndicator = false, lightweight = true)
+            vm.loadRecentRuns(
+                showRefreshIndicator = false,
+                lightweight = true,
+                includeCompletedArtifacts = true,
+            )
         }
     }
 

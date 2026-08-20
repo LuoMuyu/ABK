@@ -110,11 +110,13 @@ import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.preference.ArrowPreference
 import top.yukonga.miuix.kmp.preference.OverlayDropdownPreference
+import top.yukonga.miuix.kmp.preference.SliderPreference
 import top.yukonga.miuix.kmp.preference.SwitchPreference
 import top.yukonga.miuix.kmp.blur.layerBackdrop
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 import top.yukonga.miuix.kmp.utils.overScrollVertical
 import top.yukonga.miuix.kmp.utils.scrollEndHaptic
+import kotlin.math.roundToInt
 
 /**
  * MIUIX-styled settings screen for ABK.
@@ -434,6 +436,22 @@ fun SettingsScreenMiuix(
                         value = state.downloadMirrorBaseUrl,
                         onValueChange = { vm.setDownloadMirrorBaseUrl(it) },
                         leadingIcon = { Icon(Icons.Default.Link, contentDescription = null, tint = iconTint) }
+                    )
+                    // Download thread count — drag updates a local draft, release persists it
+                    var threadCountDraft by remember(state.downloadThreadCount) {
+                        mutableStateOf(state.downloadThreadCount.toFloat())
+                    }
+                    val threadCount = threadCountDraft.roundToInt()
+                    SliderPreference(
+                        value = threadCountDraft,
+                        onValueChange = { threadCountDraft = it },
+                        title = stringResource(R.string.settings_download_threads),
+                        summary = stringResource(R.string.settings_download_threads_desc, threadCount),
+                        startAction = { Icon(Icons.Default.Speed, contentDescription = null, tint = iconTint) },
+                        valueText = threadCount.toString(),
+                        valueRange = 1f..64f,
+                        steps = 62,
+                        onValueChangeFinished = { vm.setDownloadThreadCount(threadCountDraft.roundToInt()) }
                     )
                     // Clear artifacts
                     val hasArtifacts = state.downloadedArtifacts.isNotEmpty()

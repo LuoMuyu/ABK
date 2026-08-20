@@ -309,7 +309,8 @@ fun InstalledModulesScreenMiuix(
                     name = target.module.displayName(),
                     sizeBytes = 0L,
                     runTitle = target.module.displayName(),
-                    downloadDirectoryPath = state.downloadDirectory
+                    downloadDirectoryPath = state.downloadDirectory,
+                    downloadThreadCount = state.downloadThreadCount
                 )
             }
             val downloadedFile = downloadResult.artifacts.firstOrNull()?.filePath?.let(::File)
