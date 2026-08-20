@@ -182,6 +182,8 @@ import com.abk.kernel.data.model.WorkflowJob
 import com.abk.kernel.data.model.WorkflowRun
 import com.abk.kernel.data.model.WorkflowStep
 import com.abk.kernel.data.model.isActive
+import com.abk.kernel.data.model.isKernelBuild
+import com.abk.kernel.data.model.isManagerBuild
 import com.abk.kernel.data.model.isFailedFlashRun
 import com.abk.kernel.utils.FlashFilter
 import com.abk.kernel.utils.FlashFilterKernelKind
@@ -326,8 +328,14 @@ fun FlashScreen(
         buildWorkflowGroups(remoteArtifacts, workflowDownloadedArtifacts, unlinkedWorkflowTitle, recentRunById)
     }
     val allWorkflowGroups = remember(workflowGroups, state.sessionGhostFailedRuns, state.dismissedFailedRunIds, recentRunById) {
-        val activeRunIds = state.recentRuns.filter { it.isActive() }.map { it.id }.toSet()
-        val extraGroups = activeRunIds
+        val placeholderRunIds = state.recentRuns
+            .filter {
+                (it.isActive() && (it.isKernelBuild() || it.isManagerBuild())) ||
+                    it.isSuccessfulKernelFlashRun()
+            }
+            .map { it.id }
+            .toSet()
+        val extraGroups = placeholderRunIds
             .filter { id -> workflowGroups.none { it.runId == id } }
             .mapNotNull { id ->
                 val run = recentRunById[id] ?: return@mapNotNull null
@@ -337,7 +345,7 @@ fun FlashScreen(
             .filter { it !in state.dismissedFailedRunIds }
             .toSet()
         val extraGhostGroups = ghostRunIds
-            .filter { id -> workflowGroups.none { it.runId == id } && id !in activeRunIds }
+            .filter { id -> workflowGroups.none { it.runId == id } && id !in placeholderRunIds }
             .mapNotNull { id ->
                 val run = recentRunById[id] ?: return@mapNotNull null
                 emptyWorkflowGroupFor(run, unlinkedWorkflowTitle)
@@ -352,8 +360,10 @@ fun FlashScreen(
                     return@filter false
                 }
                 val isActive = run?.isActive() == true
+                val isActiveFlashRun = isActive &&
+                    (run?.isKernelBuild() == true || run?.isManagerBuild() == true)
                 val isSessionGhost = group.runId in state.sessionGhostFailedRuns
-                isActive || isSessionGhost || group.shouldAppearInWorkflowList(run)
+                isActiveFlashRun || isSessionGhost || group.shouldAppearInWorkflowList(run)
             }
             .sortedForWorkflowDisplay(recentRunById)
     }
@@ -546,7 +556,11 @@ fun FlashScreen(
 
     LaunchedEffect(state.isLoggedIn, state.forkRepo?.fullName) {
         if (state.isLoggedIn && state.forkRepo != null) {
-            vm.loadRecentRuns(showRefreshIndicator = false, lightweight = true)
+            vm.loadRecentRuns(
+                showRefreshIndicator = false,
+                lightweight = true,
+                includeCompletedArtifacts = true,
+            )
         }
     }
 

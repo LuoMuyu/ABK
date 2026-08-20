@@ -274,7 +274,8 @@ fun ModuleRepositoryScreen(
                     runTitle = module.sources.firstOrNull().orEmpty().ifBlank {
                         runtimeRepoUnknownSourceLabel(context)
                     },
-                    downloadDirectoryPath = state.downloadDirectory
+                    downloadDirectoryPath = state.downloadDirectory,
+                    downloadThreadCount = state.downloadThreadCount
                 )
             }
             val downloadedFile = downloadResult.artifacts.firstOrNull()?.filePath?.let(::File)
