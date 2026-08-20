@@ -121,6 +121,8 @@ import com.abk.kernel.ui.theme.appPageBackgroundColor
 import com.abk.kernel.ui.theme.uiSurfaceColor
 import com.abk.kernel.utils.findActivity
 import com.abk.kernel.viewmodel.MainViewModel
+import com.kyant.backdrop.backdrops.layerBackdrop as kyantLayerBackdrop
+import com.kyant.backdrop.backdrops.rememberLayerBackdrop as rememberKyantLayerBackdrop
 import top.yukonga.miuix.kmp.basic.NavigationBar as MiuixNavigationBar
 import top.yukonga.miuix.kmp.basic.NavigationBarItem as MiuixNavigationBarItem
 import top.yukonga.miuix.kmp.basic.NavigationRail as MiuixNavigationRail
@@ -129,7 +131,6 @@ import top.yukonga.miuix.kmp.basic.NavigationRailDisplayMode
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.SnackbarHostState as MiuixSnackbarHostState
 import top.yukonga.miuix.kmp.blur.layerBackdrop
-import top.yukonga.miuix.kmp.blur.rememberLayerBackdrop
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 import top.yukonga.miuix.kmp.utils.MiuixPopupUtils
 
@@ -328,11 +329,15 @@ private fun AbkMiuixMainScaffold(
     }
 
     val surfaceColor = MiuixTheme.colorScheme.surface
-    val floatingGlassBackdrop = rememberLayerBackdrop {
+    // Kyant0 Backdrop source for the floating bar's frosted surface. The opaque surface fill
+    // must come first: capturing only drawContent() leaves transparent pixels in the pill.
+    val floatingGlassBackdrop = rememberKyantLayerBackdrop {
         drawRect(surfaceColor)
         drawContent()
     }
-    val blurEnabledForGlass = state.miuixFloatingBottomBarEnabled && state.miuixLiquidGlassEnabled
+    // The floating bar's frost follows the blur toggle; the liquid-glass toggle only adds the
+    // saturation boost and specular edge on top of it.
+    val blurEnabledForGlass = state.miuixFloatingBottomBarEnabled && state.miuixBlurEnabled
     val blurBackdrop = rememberBlurBackdrop(state.miuixBlurEnabled, surfaceColor)
 
     // Bar slide offset (0f = visible, -1f = hidden left). Single LaunchedEffect drives it:
@@ -414,7 +419,7 @@ private fun AbkMiuixMainScaffold(
                             .fillMaxSize()
                             .then(
                                 when {
-                                    blurEnabledForGlass -> Modifier.layerBackdrop(floatingGlassBackdrop)
+                                    blurEnabledForGlass -> Modifier.kyantLayerBackdrop(floatingGlassBackdrop)
                                     blurBackdrop != null -> Modifier.layerBackdrop(blurBackdrop)
                                     else -> Modifier
                                 },
@@ -779,7 +784,7 @@ private fun AbkMiuixMainScaffold(
                                     },
                                     selectedIndex = visibleTabs.indexOf(activeTab).coerceAtLeast(0),
                                     backdrop = floatingGlassBackdrop,
-                                    isBlurEnabled = state.miuixLiquidGlassEnabled,
+                                    isBlurEnabled = state.miuixBlurEnabled,
                                     isLiquidGlassEnabled = state.miuixLiquidGlassEnabled,
                                 )
                             }
@@ -819,7 +824,7 @@ private fun AbkMiuixMainScaffold(
                             .fillMaxSize()
                             .then(
                                 when {
-                                    blurEnabledForGlass -> Modifier.layerBackdrop(floatingGlassBackdrop)
+                                    blurEnabledForGlass -> Modifier.kyantLayerBackdrop(floatingGlassBackdrop)
                                     blurBackdrop != null -> Modifier.layerBackdrop(blurBackdrop)
                                     else -> Modifier
                                 },

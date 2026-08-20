@@ -294,6 +294,7 @@ private fun miuixOpenSourceNoticeGroups(): List<MiuixOpenSourceNoticeGroup> = li
 
 private fun miuixAndroidDependencyNotices(): List<MiuixOpenSourceNotice> = listOf(
     MiuixOpenSourceNotice("compose-miuix-ui (MIUIX) 0.9.2", "Apache-2.0", "top.yukonga.miuix.kmp", "https://github.com/compose-miuix-ui/miuix"),
+    MiuixOpenSourceNotice("Kyant0 Backdrop (AndroidLiquidGlass) 2.0.0", "Apache-2.0", "io.github.kyant0:backdrop", "https://github.com/Kyant0/AndroidLiquidGlass"),
     MiuixOpenSourceNotice("Android Gradle Plugin 9.1.1", "Apache-2.0", "com.android.application"),
     MiuixOpenSourceNotice("Kotlin Gradle/Compose plugin 2.4.0", "Apache-2.0", "org.jetbrains.kotlin.plugin.compose"),
     MiuixOpenSourceNotice("androidx.core:core-ktx 1.15.0", "Apache-2.0", "Gradle direct dependency"),

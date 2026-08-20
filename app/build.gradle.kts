@@ -208,6 +208,7 @@ dependencies {
 
     // Blur / glass
     implementation(libs.miuix.blur)
+    implementation(libs.kyant.backdrop)
 
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)
@@ -224,7 +225,6 @@ dependencies {
     implementation(libs.miuix.core)
     implementation(libs.miuix.icons)
     implementation(libs.miuix.preference)
-    implementation(libs.miuix.blur)
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.miuix.navigation3.ui)
