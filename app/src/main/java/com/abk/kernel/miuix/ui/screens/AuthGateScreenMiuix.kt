@@ -84,7 +84,6 @@ import top.yukonga.miuix.kmp.basic.LinearProgressIndicator
 import top.yukonga.miuix.kmp.basic.ProgressIndicatorDefaults
 import top.yukonga.miuix.kmp.basic.RadioButton
 import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.basic.TextButton
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 
 private const val OOBE_SKIP_LOADING_DELAY_MS = 320L
@@ -279,33 +278,42 @@ private fun LoginScreenMiuix(
             Button(
                 onClick = { showConsentDialog = true },
                 enabled = !isLoading && !skipInFlight,
-                modifier = Modifier.fillMaxWidth().height(52.dp)
+                modifier = Modifier.fillMaxWidth().height(52.dp),
+                colors = ButtonDefaults.buttonColorsPrimary()
             ) {
                 if (isLoading) {
                     CircularProgressIndicator(
                         modifier = Modifier.size(24.dp),
-                        color = MiuixTheme.colorScheme.primary
+                        color = Color.White
                     )
                 } else {
-                    Icon(Icons.Default.Code, contentDescription = null)
+                    Icon(Icons.Default.Code, contentDescription = null, tint = Color.White)
                     Spacer(Modifier.width(8.dp))
                     Text(
                         text = stringResource(R.string.login_github),
                         style = MiuixTheme.textStyles.body1,
                         fontWeight = FontWeight.Medium,
-                        color = MiuixTheme.colorScheme.onPrimary
+                        color = Color.White
                     )
                 }
             }
         }
 
-        TextButton(
-            text = stringResource(R.string.oobe_skip_for_now),
+        Button(
             onClick = onSkip,
             enabled = !skipInFlight,
-            modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-            colors = ButtonDefaults.textButtonColorsPrimary()
-        )
+            modifier = Modifier.fillMaxWidth().height(52.dp),
+            colors = ButtonDefaults.buttonColors(
+                color = MiuixTheme.colorScheme.secondaryVariant,
+                contentColor = MiuixTheme.colorScheme.onSecondaryVariant
+            )
+        ) {
+            Text(
+                text = stringResource(R.string.oobe_skip_for_now),
+                style = MiuixTheme.textStyles.body1,
+                fontWeight = FontWeight.Medium
+            )
+        }
     }
 }
 
